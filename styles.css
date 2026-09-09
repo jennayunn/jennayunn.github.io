@@ -1,0 +1,931 @@
+/* ============================================================
+   Self-hosted IBM Plex (latin subset) — no external requests
+   ============================================================ */
+@font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('fonts/ibm-plex-mono-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('fonts/ibm-plex-mono-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Serif';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/ibm-plex-serif-400.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Serif';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('fonts/ibm-plex-serif-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'IBM Plex Serif';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('fonts/ibm-plex-serif-600.woff2') format('woff2');
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+::selection {
+    background: rgba(0, 212, 255, 0.28);
+    color: #ffffff;
+}
+
+body,
+.page-content {
+    background: #000000;
+}
+
+:root {
+    --accent: #00d4ff;
+    --ink-bright: #f2f2f0;
+    --ink-body: #c8c8c8;
+    --ink-muted: #8a9096;
+    --ink-label: #9ba1a7;
+    --rule: rgba(255, 255, 255, 0.12);
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --header-h: 76px;
+    --brain-w: 64px;
+    /* header padding and the brain's right edge share this value */
+    --gutter: clamp(1.5rem, 5vw, 4rem);
+}
+
+/* ============================================================
+   Hero — deliberately full viewport
+   ============================================================ */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000000;
+    text-align: center;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-title {
+    /* fluid: at 375px this lands ~30px and fits on one line, instead of
+       48px wrapping to two and touching both screen edges */
+    font-size: clamp(1.75rem, 8vw, 3rem);
+    margin: 1.5rem 1.25rem 0;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.hero-subtitle {
+    font-size: clamp(0.95rem, 3.4vw, 1.2rem);
+    color: #d8d8d8;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 1rem 1.5rem 0;
+}
+
+/* ============================================================
+   Content sections — height follows content
+   ============================================================ */
+.page-content {
+    /* the brain now lives in the header band, so content only has to
+       clear the 2px axon in the gutter — not a 110px graphic */
+    padding-right: 48px;
+}
+
+.content-section {
+    box-sizing: border-box;
+    margin: 0;
+    scroll-margin-top: var(--header-h);
+    padding: clamp(6rem, 10vw, 9rem) var(--gutter);
+    border: 0;
+    background: #000000;
+}
+
+.content-section + .content-section {
+    padding-top: clamp(2rem, 3.5vw, 3rem);
+}
+
+/* single centred column, heading on top of each section */
+.content-inner {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.section-body {
+    min-width: 0;
+}
+
+/* ------------------------------------------------------------
+   Section heading — the accent as a marker, not a headline
+   ------------------------------------------------------------ */
+.content-inner .section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin: 0 0 2.5rem;
+    color: var(--ink-bright);
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.1;
+}
+
+.section-number {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+}
+
+/* hairline that closes every heading, igniting at the left edge */
+.content-inner .section-heading::after {
+    content: "";
+    align-self: stretch;
+    height: 1px;
+    margin-top: 0.9rem;
+    background: linear-gradient(90deg,
+        var(--accent) 0,
+        rgba(0, 212, 255, 0.3) 14%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0) 100%);
+}
+
+/* ------------------------------------------------------------
+   Body copy
+   ------------------------------------------------------------ */
+.content-inner p,
+.content-inner dd {
+    color: var(--ink-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+}
+
+.content-inner a {
+    color: #d8d8d8;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: color 140ms ease, border-color 140ms ease;
+}
+
+.content-inner a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.content-inner a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+   Definition lists (About + Work meta) — one shared label column
+   ------------------------------------------------------------ */
+.about-list,
+.item-meta {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 1.15rem 1.5rem;
+    margin: 0;
+}
+
+.about-list {
+    gap: 1.45rem 1.5rem;
+}
+
+.about-list dt,
+.item-meta dt {
+    padding-top: 0.25rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-label);
+}
+
+.about-list dd,
+.item-meta dd {
+    margin: 0;
+}
+
+.about-list dd strong {
+    color: var(--ink-bright);
+    font-weight: 600;
+}
+
+.section-note {
+    margin: 0 0 2.6rem;
+    color: var(--ink-body);
+    font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------------
+   Work items
+   ------------------------------------------------------------ */
+.work-item {
+    display: block;
+    padding: 2.75rem 0;
+    border-top: 1px solid var(--rule);
+}
+
+.work-item:first-of-type {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.work-item:last-of-type {
+    padding-bottom: 0;
+}
+
+.item-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-bottom: 0.7rem;
+}
+
+.item-number {
+    flex: none;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+}
+
+.item-heading h3 {
+    margin: 0;
+    color: var(--ink-bright);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.28;
+}
+
+.item-heading .project-link {
+    color: var(--ink-bright);
+    /* must be cleared explicitly: .content-inner a sets a border-bottom,
+       which would stack under the text-decoration as a second line */
+    border-bottom: 0;
+    /* a real underline rather than border-bottom: it skips descenders, so
+       it reads as a link instead of a rule under the heading */
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 212, 255, 0.5);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.19em;
+    transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+/* keeps the glyph on the same line as the title's last word */
+.link-nobr {
+    white-space: nowrap;
+}
+
+.item-heading .project-link svg {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.2em;
+    color: rgba(0, 212, 255, 0.75);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+    vertical-align: 0.02em;
+}
+
+.item-heading .project-link:hover {
+    color: #ffffff;
+    text-decoration-color: var(--accent);
+}
+
+.item-heading .project-link:hover svg {
+    color: var(--accent);
+}
+
+.content-inner .item-description {
+    margin: 0 0 1.75rem;
+}
+
+/* no chip: status rides the item's marker line as plain tracked mono, in
+   the slot where the eye already looks for "which item is this" */
+.item-status {
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.item-status::before {
+    content: "\00b7";
+    margin: 0 0.55rem;
+    color: var(--ink-muted);
+}
+
+.item-meta dd {
+    font-size: 1.02rem;
+    line-height: 1.55;
+}
+
+/* the payoff line gets the accent */
+.item-meta dt.result-label,
+.item-meta dd.result {
+    margin-top: 0.55rem;
+}
+
+.item-meta dt.result-label {
+    color: var(--accent);
+}
+
+.item-meta dd.result {
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent);
+    color: var(--ink-bright);
+}
+
+/* ------------------------------------------------------------
+   Talks
+   ------------------------------------------------------------ */
+.talk-row {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: baseline;
+    padding: 1.35rem 0;
+    border-top: 1px solid var(--rule);
+}
+
+.talk-row:first-of-type {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.talk-row:last-of-type {
+    padding-bottom: 0;
+}
+
+.talk-row h3 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    color: var(--ink-label);
+    font-variant-numeric: tabular-nums;
+}
+
+/* month reads as a peer of the year; inherits size, weight, tracking and
+   tone from the h3. The mono space between them is a full character
+   advance, so it separates the two fields without extra margin. */
+.talk-month {
+    text-transform: uppercase;
+}
+
+.content-inner .talk-venue,
+.content-inner .talk-kind {
+    margin: 0;
+}
+
+.content-inner .talk-venue {
+    color: var(--ink-bright);
+}
+
+.content-inner .talk-kind {
+    margin-top: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------
+   Contact
+   ------------------------------------------------------------ */
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.9rem;
+    margin: 0 0 1.75rem;
+    font-size: 1.02rem;
+    font-weight: 500;
+}
+
+/* icon sits outside the underline, so the rule tracks the label only */
+.content-inner .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 0;
+}
+
+.content-inner .contact-links a span {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: border-color 140ms ease;
+}
+
+.content-inner .contact-links a:hover span {
+    border-bottom-color: var(--accent);
+}
+
+/* same line language as the external-link glyph on paper titles */
+.contact-links a svg {
+    flex: none;
+    /* 1.05em left the mortarboard's brim and bowl merging; it needs
+       ~20px to resolve as a cap with a tassel */
+    width: 1.25em;
+    height: 1.25em;
+    color: var(--ink-muted);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+    transition: color 140ms ease;
+}
+
+.content-inner .contact-links a:hover svg {
+    color: var(--accent);
+}
+
+.content-inner .contact-links a:first-child {
+    color: var(--ink-bright);
+}
+
+.content-inner .contact-links a:first-child span {
+    border-bottom-color: rgba(0, 212, 255, 0.55);
+}
+
+.content-inner .contact-meta {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+}
+
+/* ============================================================
+   Sticky header — the hero, compressed. Revealed only once the
+   hero is behind you, so it reads as a collapse rather than a repeat.
+   ============================================================ */
+.site-header {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    /* right padding leaves room for the brain, which is painted by the
+       fixed axon column above this band rather than being a child of it */
+    padding: 0 calc(var(--gutter) + var(--brain-w) + 1.25rem) 0 var(--gutter);
+    background: #000000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 300ms ease, transform 300ms ease, visibility 300ms;
+}
+
+/* content fades out under the band instead of being cut by a hard edge */
+.site-header::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: linear-gradient(#000000, rgba(0, 0, 0, 0));
+    pointer-events: none;
+}
+
+.site-header.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.site-name {
+    color: var(--ink-bright);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    transition: color 140ms ease;
+}
+
+.site-name:hover {
+    color: var(--accent);
+}
+
+.site-name:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------
+   Section nav — full labels on desktop. On mobile the header takes a
+   second row and shows the page's own 01-04 markers, with the current
+   section spelled out.
+   ------------------------------------------------------------ */
+.site-nav {
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+}
+
+.site-nav a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 140ms ease;
+}
+
+.site-nav a:hover {
+    color: var(--ink-bright);
+}
+
+.site-nav a.is-current {
+    color: var(--accent);
+}
+
+.site-nav a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* numbers are the mobile form of the nav */
+.site-nav .nav-num {
+    display: none;
+}
+
+/* numbers are the mobile-only form */
+/* ============================================================
+   Brain visual + scroll indicator
+   ============================================================ */
+.brain-anchor {
+    position: relative;
+    width: min(500px, 78vw);
+    aspect-ratio: 1300 / 1210;
+    flex: none;
+}
+
+/* ambient light bleeding into the black — carries the glow further than a
+   drop-shadow can on strokes this thin, and blooms in with the fill */
+.brain-anchor::before {
+    content: "";
+    position: absolute;
+    inset: -14%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 46%,
+        rgba(0, 212, 255, 0.17),
+        rgba(0, 212, 255, 0.06) 45%,
+        rgba(0, 212, 255, 0) 70%);
+    opacity: 0;
+    pointer-events: none;
+    animation: brainHalo 10s ease-in-out infinite;
+}
+
+@keyframes brainHalo {
+    0%, 28% {
+        opacity: 0;
+        transform: scale(0.93);
+    }
+    33%, 62% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    67%, 100% {
+        opacity: 0;
+        transform: scale(0.93);
+    }
+}
+
+.brain-visual {
+    position: relative;
+    width: 100%;
+}
+
+.brain-visual #brain-svg {
+    display: block;
+    width: 100%;
+    max-width: none;
+}
+
+.brain-path {
+    stroke: var(--accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: var(--accent);
+    fill-opacity: 0;
+    /* --brain-dash is the path's own length, set by the script. The
+       fallback keeps the stroke hidden for the frame before that runs. */
+    stroke-dashoffset: var(--brain-dash, 9999px);
+    animation: brainDraw 10s ease-in-out infinite,
+               brainFill 10s ease-in-out infinite;
+}
+
+/* draw in over 3s, hold, then retract over 3s */
+@keyframes brainDraw {
+    0% {
+        stroke-dashoffset: var(--brain-dash, 9999px);
+    }
+    30%, 66% {
+        stroke-dashoffset: 0;
+    }
+    96%, 100% {
+        stroke-dashoffset: var(--brain-dash, 9999px);
+    }
+}
+
+/* fill lands just before the stroke closes, and clears before it retracts —
+   otherwise the solid fill would hide the retraction entirely */
+@keyframes brainFill {
+    0%, 28% {
+        fill-opacity: 0;
+        filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.4));
+    }
+    33%, 62% {
+        fill-opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.85))
+                drop-shadow(0 0 26px rgba(0, 212, 255, 0.4));
+    }
+    67%, 100% {
+        fill-opacity: 0;
+        filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.4));
+    }
+}
+
+/* An indefinitely looping graphic is exactly what this query is for. */
+@media (prefers-reduced-motion: reduce) {
+    .brain-path {
+        stroke-dashoffset: 0;
+        fill-opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.85))
+                drop-shadow(0 0 26px rgba(0, 212, 255, 0.4));
+        animation: none;
+    }
+
+    .brain-anchor::before {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
+
+.scroll-indicator {
+    position: fixed;
+    z-index: 10;
+    top: 14px;
+    right: var(--gutter);
+    bottom: 28px;
+    width: var(--brain-w);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.scroll-indicator.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mini-brain,
+.mini-brain-svg {
+    display: block;
+    width: 100%;
+    flex: none;
+}
+
+.mini-brain-svg .brain-path {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+    animation: none;
+}
+
+.scroll-progress-track {
+    position: relative;
+    width: 2px;
+    min-height: 0;
+    flex: 1;
+    align-self: flex-start;
+    /* pins the line to the brain's stem; both values are relative to
+       --brain-w, so they hold when the brain resizes */
+    margin-top: -3.4%;
+    margin-left: 66.6%;
+    transform: translateX(-50%);
+    /* neutral, so the cyan fill reads as active against inactive */
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* axon terminal — gives the fill a denominator to be a fraction of */
+.scroll-progress-track::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 50%;
+    background: #000000;
+    transform: translate(-50%, 50%);
+    transition: background-color 240ms ease, border-color 240ms ease,
+                box-shadow 240ms ease;
+}
+
+/* the signal arrives */
+.scroll-progress-track.is-complete::after {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 8px 2px rgba(0, 212, 255, 0.75);
+}
+
+.scroll-progress-fill {
+    position: relative;
+    width: 100%;
+    height: 0;
+    background: var(--accent);
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.3);
+}
+
+/* glow travels with the leading edge rather than burning down the whole
+   line — a signal propagating, not a lit tube */
+.scroll-progress-fill::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c9f3ff;
+    transform: translate(-50%, 50%);
+    box-shadow: 0 0 6px 1px var(--accent), 0 0 16px 4px rgba(0, 212, 255, 0.6);
+    transition: opacity 200ms ease;
+}
+
+/* hand the glow off to the terminal instead of stacking two nodes */
+.scroll-progress-track.is-complete .scroll-progress-fill::after {
+    opacity: 0;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 600px) {
+    :root {
+        --header-h: 68px;
+    }
+
+    .page-content {
+        padding-right: 12px;
+    }
+
+    .content-section {
+        padding: 4.5rem 1.5rem;
+    }
+
+    .about-list,
+    .item-meta {
+        grid-template-columns: 1fr;
+        gap: 0.65rem 0;
+    }
+
+    .about-list dt,
+    .item-meta dt {
+        padding-top: 0.9rem;
+    }
+
+    .item-heading {
+        gap: 0.4rem;
+    }
+
+    .item-heading h3 {
+        font-size: 1.28rem;
+    }
+
+    .content-inner .item-description,
+    .item-meta {
+        margin-left: 0;
+    }
+
+    .talk-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+
+    /* brain rides in the header band, so it no longer competes with the
+       copy; only the 2px axon sits in the gutter beside the text */
+    .scroll-indicator {
+        top: 10px;
+        right: 6px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+        width: 56px;
+    }
+
+    /* let the subtitle reflow; the authored break only helps at widths
+       where the line would not wrap on its own */
+    .subtitle-break {
+        display: none;
+    }
+
+    .site-name {
+        font-size: 0.9rem;
+    }
+
+    /* the name stacks onto two lines, which frees the horizontal room the
+       nav needs to stay on one row beside it. Right padding reserves the
+       brain's column so the nav can never run underneath it. */
+    .site-header {
+        gap: 0.75rem;
+        padding-right: calc(56px + 6px + 0.75rem);
+    }
+
+    .site-name {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+    }
+
+    .site-nav {
+        gap: 0.2rem;
+    }
+
+    .site-nav a {
+        gap: 0.3rem;
+        padding: 0.55rem 0.45rem;
+        letter-spacing: 0.08em;
+    }
+
+    .site-nav .nav-num {
+        display: inline;
+    }
+
+    .site-nav .nav-label {
+        display: none;
+    }
+
+    /* the section you are in says its name; on its own row there is
+       ample slack, so the width change as it moves is harmless */
+    .site-nav a.is-current .nav-label {
+        display: inline;
+    }
+}
