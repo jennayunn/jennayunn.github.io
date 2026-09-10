@@ -929,3 +929,35 @@ body,
         display: inline;
     }
 }
+
+.read-paper-link {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: none;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.read-paper-link:hover {
+    color: var(--accent);
+}
+
+.read-paper-link svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 0.25em;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+    vertical-align: -0.15em;
+    transition: color 0.2s ease;
+}
+
+.read-paper-link:hover svg {
+    color: var(--accent);
+}
